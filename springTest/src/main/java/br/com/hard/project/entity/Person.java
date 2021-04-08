@@ -40,6 +40,8 @@ public class Person implements Serializable {
     )
     private List<Address> addresses;
 
+
+
     public void addPhone(Phone phone){
         if(phones == null){
             phones = new ArrayList<Phone>();
