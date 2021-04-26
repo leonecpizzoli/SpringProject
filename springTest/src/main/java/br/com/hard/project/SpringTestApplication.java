@@ -12,12 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +53,116 @@ public class SpringTestApplication implements CommandLineRunner {
         //testFindAndSort();
         //testFindByIds();
         //testIfExists();
-        testPagination();
+        //testPagination();
+        //testSearchByAge();
+        //testSearchByFirstName();
+        //testSearchByAndOr();
+        //testSearchBetween();
+        //testSearchByAndBetween();
+        //testByGreaterAndLess();
+        //testByGreaterAndLessEquals();
+        //testByFirstNameGreaterThan();
+        //testByStartingAndEndingWith();
+        //testByContaining();
+        //testByAddressStartingAndEnding();
+        testFindByInAndNotIn();
+    }
+
+    private void testFindByInAndNotIn() {
+        List<Person> people1 = personRepository.findByAgeIn(24, 18, 32);
+        people1.forEach(System.out::println);
+
+        System.out.println("<------------:-----------------:----------------->");
+
+        List<Person> people2 = personRepository.findByAgeNotIn(24,18,32);
+        people2.forEach(System.out::println);
+    }
+
+    private void testByAddressStartingAndEnding() {
+        List<Address> addresses = addressRepository.findByCityStartingWithAndStreetEndingWith("Chi", "02");
+        addresses.forEach(System.out::println);
+    }
+
+    private void testByContaining() {
+        List<Address> addresses = addressRepository.findByStreetContaining("st");
+        addresses.forEach(System.out::println);
+    }
+
+    private void testByStartingAndEndingWith(){
+        List<Address> addresses = addressRepository.findByCityStartingWith("Chi");
+        addresses.forEach(System.out::println);
+        System.out.println("<------------:-----------------:----------------->");
+        List<Address> addresses2 = addressRepository.findByStreetEndingWith("02");
+        addresses2.forEach(System.out::println);
+
+    }
+
+    private void testByFirstNameGreaterThan() {
+        List<Person> people = personRepository.findByFirstNameGreaterThan("Leone");
+        people.forEach(System.out::println);
+
+    }
+
+    private void testByGreaterAndLessEquals() {
+        List<Person> people1 = personRepository.findByAgeGreaterThanEqual(32);
+        people1.forEach(System.out::println);
+
+        System.out.println("<------------:-----------------:----------------->");
+
+        List<Person> people2 = personRepository.findByAgeLessThanEqual(24);
+        people2.forEach(System.out::println);
+    }
+
+    private void testByGreaterAndLess() {
+        List<Person> people1 = personRepository.findByAgeGreaterThan(20);
+        people1.forEach(System.out::println);
+
+
+        System.out.println("<------------:-----------------:----------------->");
+
+        List<Person> people2 = personRepository.findByAgeLessThan(35);
+        people2.forEach(System.out::println);
+    }
+
+    private void testSearchByAndBetween() {
+        List<Person> people1 = personRepository.findByLastNameAndAgeBetween("Pizzoli", 11, 55);
+        people1.forEach(System.out::println);
+    }
+
+    private void testSearchBetween() {
+        List<Person> people = personRepository.findByAgeBetween(15, 32);
+        people.forEach(System.out::println);
+
+    }
+
+    private void testSearchByAndOr() {
+        Person person1 = personRepository.findByFirstNameAndLastName("Lauri", "Markkanen");
+        System.out.println(person1);
+
+        System.out.println("<------------:-----------------:----------------->");
+
+        List<Person> people = personRepository.findByAgeOrFirstName(32,"Zach");
+        people.forEach(System.out::println);
+    }
+
+    private void testSearchByFirstName() {
+        List<Person> people1 = personRepository.findByFirstNameLike("Eduardo");
+        people1.forEach(System.out::println);
+
+        System.out.println("<------------:-----------------:----------------->");
+
+        List<Person> people2 = personRepository.findByFirstNameNotLike("Eduardo");
+        people2.forEach(System.out::println);
+    }
+
+    private void testSearchByAge() {
+        List<Person> people1 = personRepository.findByAge(18);
+        people1.forEach(System.out::println);
+
+        System.out.println("<------------:-----------------:----------------->");
+
+        List<Person> people2 = personRepository.findByAgeNot(18);
+        people2.forEach(System.out::println);
     }
 
     private void testPagination() {
